@@ -1,0 +1,38 @@
+import csv
+import os
+
+# automate customer router verification
+def automate_customer_kyc(file_name, customer_id, location, data_throughput, latency):
+    try:
+        # Create the directory if it doesn't exist
+        directory = os.path.dirname(file_name)
+        if directory and not os.path.exists(directory):
+            os.makedirs(directory)
+
+        # Open the file
+        with open(file_name, mode="a", newline="") as file:
+            writer = csv.writer(file)
+            # Write details
+            writer.writerow([customer_id, location, data_throughput, latency])
+        print(f"KYC data for customer {customer_id} added successfully!")
+    except FileNotFoundError:
+        print(f"Error: The file {file_name} could not be found or created.")
+    except PermissionError:
+        print(f"Error: Insufficient permissions to write to the file {file_name}.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {type(e).__name__} - {e}")
+
+
+# Main script
+if __name__ == "__main__":
+    # Define file path
+    file_path = r"D:\Python Programs\automation_task\kyc_data.csv"
+
+    # Collect customer details
+    customer_id = input("Enter customer_id: ")
+    location = input("Enter location: ")
+    data_throughput = input("Enter data_throughput: ")
+    latency = input("Enter latency: ")
+
+    # Call the function
+    automate_customer_kyc(file_path, customer_id, location, data_throughput, latency)
